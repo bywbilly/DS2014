@@ -52,7 +52,7 @@ public:
          */
         bool hasNext()
         {
-            return cursor+1<=base.amount;
+            return cursor;
         }
 
         /**
@@ -63,7 +63,7 @@ public:
         {
             if(!hasNext())throw ElementNotExist();
             valid=1;
-            return base.elements[++cursor];
+            return base.elements[base.point2[cursor]];
         }
 
 		/**
@@ -77,9 +77,12 @@ public:
 		void remove()
 		{
 		    if(!valid)throw ElementNotExist();
-            std::swap(base.elements[cursor],base.elements[base.amount]);
+		    int p1=base.point2[cursor],p2=base.amount;
+            base.elements[p1]=base.elements[p2];
+            base.point2[base.point1[p2]]=p1;
+            base.point1[p1]=base.point1[p2];
             base.amount--;
-            base.down(cursor);
+            base.down(p1);
             valid=0;
             cursor--;
 		}
@@ -89,7 +92,7 @@ public:
          */
         Iterator(PriorityQueue<V,C> &c):base(c)
         {
-            cursor=0;
+            cursor=base.amount;
             valid=0;
         }
     private:
@@ -110,6 +113,8 @@ public:
         capacity=8;
         amount=0;
         elements=new V[capacity];
+        point1=new int[capacity];
+        point2=new int[capacity];
     }
 
     /**
@@ -118,6 +123,8 @@ public:
     ~PriorityQueue()
     {
         delete [] elements;
+        delete [] point1;
+        delete [] point2;
     }
 
     /**
@@ -131,6 +138,7 @@ public:
             capacity=amount*2;
             elements=new V[capacity];
             for(int i=1;i<=amount;++i)elements[i]=x.getIndex(i);
+            for(int i=1;i<=amount;++i)point1[i]=point2[i]=i;
         }
         return *this;
     }
@@ -154,6 +162,7 @@ public:
         capacity=amount*2;
         elements=new V[capacity];
         for(int i=0;i<amount;++i)elements[i+1]=x.get(i);
+        for(int i=1;i<=amount;++i)point1[i]=point2[i]=i;
         for(int i=amount/2;i>0;--i)down(i);
 	}
 
@@ -204,6 +213,8 @@ public:
     {
         if(amount+2>=capacity)enlarge();
         elements[++amount]=value;
+        point1[amount]=amount;
+        point2[amount]=amount;
         up(amount);
     }
 
@@ -235,6 +246,7 @@ private:
      */
     int capacity,amount;
     V *elements;
+    int *point1,*point2;
     C cmp;
 
     /**
@@ -243,10 +255,20 @@ private:
     void enlarge()
     {
         V *temp=new V[capacity*2];
-        for(int i=1;i<=amount;i++)temp[i]=elements[i];
+        int *p1=new int[capacity*2],*p2=new int[capacity*2];
+        for(int i=1;i<=amount;i++)
+        {
+            temp[i]=elements[i];
+            p1[i]=point1[i];
+            p2[i]=point2[i];
+        }
         capacity*=2;
         delete [] elements;
+        delete [] point1;
+        delete [] point2;
         elements=temp;
+        point1=p1;
+        point2=p2;
     }
 
     /**
@@ -258,6 +280,8 @@ private:
             if(cmp(elements[w],elements[w/2]))
                {
                    std::swap(elements[w],elements[w/2]);
+                   std::swap(point2[point1[w]],point2[point1[w/2]]);
+                   std::swap(point1[w],point1[w/2]);
                }else break;
     }
 
@@ -274,6 +298,8 @@ private:
             if(cmp(elements[j],elements[w]))
             {
                 std::swap(elements[j],elements[w]);
+                std::swap(point2[point1[w]],point2[point1[j]]);
+                std::swap(point1[w],point1[j]);
             }else break;
         }
     }

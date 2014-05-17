@@ -65,15 +65,29 @@ public:
             if(!valid)throw ElementNotExist();
             valid=0;
             int t1=cursor,t2;
-            while(1)
+            if(!order)
             {
-                t2=(t1+1)%base.capacity;
-                if(t2==base.last)break;
-                base.elements[t1]=base.elements[t2];
-                t1=t2;
+                while(1)
+                {
+                    t2=(t1+1)%base.capacity;
+                    if(t2==base.last)break;
+                    base.elements[t1]=base.elements[t2];
+                    t1=t2;
+                }
+                cursor=(cursor-1+base.capacity)%base.capacity;
+                base.last=(base.last-1+base.capacity)%base.capacity;
+            }else
+            {
+                while(1)
+                {
+                    t2=(t1-1+base.capacity)%base.capacity;
+                    if(t2==base.first)break;
+                    base.elements[t1]=base.elements[t2];
+                    t1=t2;
+                }
+                cursor=(cursor+1)%base.capacity;
+                base.last=(base.first+1)%base.capacity;
             }
-            if(!order)cursor=(cursor-1+base.capacity)%base.capacity;
-            base.last=(base.last-1+base.capacity)%base.capacity;
         }
 
         /**
