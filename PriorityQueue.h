@@ -134,8 +134,8 @@ public:
     {
         if(&x!=this)
         {
-            amount=x.size();
-            capacity=amount*2;
+            amount=x.amount;
+            capacity=x.capacity;
             elements=new V[capacity];
             for(int i=1;i<=amount;++i)elements[i]=x.getIndex(i);
             for(int i=1;i<=amount;++i)point1[i]=point2[i]=i;
