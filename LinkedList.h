@@ -373,7 +373,7 @@ public:
         if(isEmpty())throw ElementNotExist();
         amount--;
         Node *a=head->next;
-        a->pred=0;
+        if(a)a->pred=0;
         delete head;
         head=a;
         if(!amount)head=tail=0;
@@ -388,7 +388,7 @@ public:
         if(isEmpty())throw ElementNotExist();
         amount--;
         Node *a=tail->pred;
-        a->next=0;
+        if(a)a->next=0;
         delete tail;
         tail=a;
         if(!amount)head=tail=0;

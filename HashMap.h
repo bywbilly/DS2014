@@ -68,6 +68,11 @@ public:
             return value;
         }
 
+        V &getConstValue()
+        {
+            return value;
+        }
+
         void modifyValue(V _value)
         {
             value=_value;
@@ -247,7 +252,7 @@ public:
         auto it=elements[i].next;
         while(it)
         {
-            if(it->elem.getKey()==key)return it->elem.getValue();
+            if(it->elem.getKey()==key)return it->elem.getConstValue();
             it=it->next;
         }
         throw ElementNotExist();

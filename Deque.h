@@ -72,6 +72,7 @@ public:
                 base.elements[t1]=base.elements[t2];
                 t1=t2;
             }
+            if(!order)cursor=(cursor-1+base.capacity)%base.capacity;
             base.last=(base.last-1+base.capacity)%base.capacity;
         }
 
@@ -239,7 +240,7 @@ public:
 	const T& get(int index) const
 	{
 	    if(index<0 || index>=size())throw IndexOutOfBound();
-	    return elements[(first+index)%capacity];
+	    return elements[(first+index+1)%capacity];
 	}
 
 	/**
@@ -250,7 +251,7 @@ public:
 	void set(int index, const T& e)
 	{
 	    if(index<0 || index>=size())throw IndexOutOfBound();
-	    elements[(first+index)%capacity]=e;
+	    elements[(first+index+1)%capacity]=e;
 	}
 
 	/**

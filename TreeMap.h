@@ -5,7 +5,6 @@
 #include "ElementNotExist.h"
 #include "iostream"
 #include "ctime"
-#include "cstdlib"
 
 /**
  * TreeMap is the balanced-tree implementation of map. The iterators must
@@ -32,6 +31,10 @@ public:
         }
 
         V getValue() const
+        {
+            return value;
+        }
+        V &getConstValue()
         {
             return value;
         }
@@ -178,7 +181,7 @@ public:
         {
             if(!(key<w->elem.getKey()) && !(w->elem.getKey()<key))
             {
-                return w->elem.getValue();
+                return w->elem.getConstValue();
             }
             if(key<w->elem.getKey())w=w->left;else w=w->right;
         }
