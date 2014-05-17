@@ -161,8 +161,8 @@ public:
     {
         if(&x!=this)
         {
-            amount=x.size();
-            capacity=amount*2+1;
+            amount=0;
+            capacity=x.capacity;
             elements=new Node[capacity];
             auto it=x.iterator();
             while(it.hasNext())
