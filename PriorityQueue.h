@@ -52,7 +52,7 @@ public:
          */
         bool hasNext()
         {
-            return cursor;
+            return cursor-1>0;
         }
 
         /**
@@ -63,6 +63,7 @@ public:
         {
             if(!hasNext())throw ElementNotExist();
             valid=1;
+            cursor--;
             return base.elements[base.point2[cursor]];
         }
 
@@ -84,7 +85,6 @@ public:
             base.amount--;
             base.down(p1);
             valid=0;
-            cursor--;
 		}
 
 		/**
@@ -92,7 +92,7 @@ public:
          */
         Iterator(PriorityQueue<V,C> &c):base(c)
         {
-            cursor=base.amount;
+            cursor=base.amount+1;
             valid=0;
         }
     private:
@@ -137,6 +137,8 @@ public:
             amount=x.amount;
             capacity=x.capacity;
             elements=new V[capacity];
+            point1=new int[capacity];
+            point2=new int[capacity];
             for(int i=1;i<=amount;++i)elements[i]=x.getIndex(i);
             for(int i=1;i<=amount;++i)point1[i]=point2[i]=i;
         }
@@ -161,6 +163,8 @@ public:
 	    amount=x.size();
         capacity=amount*2;
         elements=new V[capacity];
+        point1=new int[capacity];
+        point2=new int[capacity];
         for(int i=0;i<amount;++i)elements[i+1]=x.get(i);
         for(int i=1;i<=amount;++i)point1[i]=point2[i]=i;
         for(int i=amount/2;i>0;--i)down(i);

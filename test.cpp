@@ -638,12 +638,12 @@ void testHeap()
 
 int main()
 {
-    //testLink();
-    //testArray();
-    //testHash();
-    //testTree();
+    testLink();
+    testArray();
+    testHash();
+    testTree();
     testDeque();
-    //testHeap();
+    testHeap();
     return 0;
 }
 
