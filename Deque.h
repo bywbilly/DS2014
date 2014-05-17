@@ -25,6 +25,7 @@ public:
          */
         bool hasNext()
         {
+            if(base.capacity==0)return 0;
             if(!order)
             {
                 return ((cursor+1)%base.capacity!=base.last);

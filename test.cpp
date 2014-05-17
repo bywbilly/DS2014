@@ -640,9 +640,9 @@ int main()
 {
     //testLink();
     //testArray();
-    testHash();
+    //testHash();
     //testTree();
-    //testDeque();
+    testDeque();
     //testHeap();
     return 0;
 }
