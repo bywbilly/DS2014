@@ -136,6 +136,7 @@ public:
         {
             int temp=x.size();
             capacity=temp*2;
+            delete [] elements;
             elements=new T[capacity];
             for(int i=0;i<temp;++i)elements[i+1]=x.get(i);
             first=0;last=temp+1;
@@ -148,7 +149,11 @@ public:
      */
     Deque(const Deque<T>& x)
     {
-        *this=x;
+            int temp=x.size();
+            capacity=temp*2;
+            elements=new T[capacity];
+            for(int i=0;i<temp;++i)elements[i+1]=x.get(i);
+            first=0;last=temp+1;
     }
 
 	/**

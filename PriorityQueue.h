@@ -136,6 +136,9 @@ public:
         {
             amount=x.amount;
             capacity=x.capacity;
+            delete [] elements;
+            delete [] point1;
+            delete [] point2;
             elements=new V[capacity];
             point1=new int[capacity];
             point2=new int[capacity];
@@ -150,7 +153,13 @@ public:
      */
     PriorityQueue(const PriorityQueue &x)
     {
-        *this=x;
+            amount=x.amount;
+            capacity=x.capacity;
+            elements=new V[capacity];
+            point1=new int[capacity];
+            point2=new int[capacity];
+            for(int i=1;i<=amount;++i)elements[i]=x.getIndex(i);
+            for(int i=1;i<=amount;++i)point1[i]=point2[i]=i;
     }
 
 	/**

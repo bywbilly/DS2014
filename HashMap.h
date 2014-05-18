@@ -163,6 +163,7 @@ public:
         {
             amount=0;
             capacity=x.capacity;
+            delete [] elements;
             elements=new Node[capacity];
             auto it=x.iterator();
             while(it.hasNext())
@@ -179,7 +180,15 @@ public:
      */
     HashMap(const HashMap &x)
     {
-        *this=x;
+        amount=0;
+        capacity=x.capacity;
+        elements=new Node[capacity];
+        auto it=x.iterator();
+        while(it.hasNext())
+        {
+            auto temp=it.next();
+            put(temp.getKey(),temp.getValue());
+        }
     }
 
     /**

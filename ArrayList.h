@@ -99,8 +99,9 @@ public:
     {
         if(&x!=this)
         {
-            amount=x.size();
-            capacity=amount*2;
+            amount=x.amount;
+            capacity=x.capacity;
+            delete [] elements;
             elements=new T[capacity];
             for(int i=0;i<amount;++i)elements[i]=x.get(i);
         }
@@ -112,7 +113,10 @@ public:
      */
     ArrayList(const ArrayList& x)
     {
-        *this=x;
+        amount=x.amount;
+        capacity=x.capacity;
+        elements=new T[capacity];
+        for(int i=0;i<amount;++i)elements[i]=x.get(i);
     }
 
     /**
