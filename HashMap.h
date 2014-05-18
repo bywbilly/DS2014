@@ -161,9 +161,9 @@ public:
     {
         if(&x!=this)
         {
-            amount=0;
-            capacity=x.capacity;
+            clear();
             delete [] elements;
+            capacity=x.capacity;
             elements=new Node[capacity];
             auto it=x.iterator();
             while(it.hasNext())

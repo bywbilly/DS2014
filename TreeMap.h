@@ -106,8 +106,7 @@ public:
     {
         if(&x!=this)
         {
-            amount=0;
-            root=0;
+            clear();
             auto it=x.iterator();
             while(it.hasNext())
             {
@@ -123,7 +122,14 @@ public:
      */
     TreeMap(const TreeMap &x)
     {
-        *this=x;
+        amount=0;
+        root=0;
+        auto it=x.iterator();
+        while(it.hasNext())
+        {
+            auto temp=it.next();
+            put(temp.getKey(),temp.getValue());
+        }
     }
 
     /**

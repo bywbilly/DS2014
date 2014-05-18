@@ -147,7 +147,28 @@ public:
      */
     LinkedList(const LinkedList<T> &c)
     {
-        *this=c;
+        if(c.isEmpty())
+        {
+            head=tail=NULL;
+            amount=0;
+        }else
+        {
+            auto i=c.iterator();
+            Node *j=0,*a;
+            head=tail=0;
+            if(i.hasNext())j=head=new Node(i.next(),0,0);
+            while(1)
+            {
+                if(i.hasNext())
+                {
+                    a=new Node(i.next(),j,0);
+                    j->next=a;
+                    j=a;
+                }else break;
+            }
+            tail=j;
+            amount=c.size();
+        }
     }
 
     /**
@@ -157,6 +178,7 @@ public:
     {
         if(&c!=this)
         {
+            clear();
             if(c.isEmpty())
             {
                 head=tail=NULL;
