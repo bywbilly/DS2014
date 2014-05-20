@@ -265,7 +265,7 @@ public:
      */
     void add(int index, const T& element)
     {
-        if(index<0 || index>=amount)throw IndexOutOfBound();
+        if(index<0 || index>amount)throw IndexOutOfBound("Link add");
         if(index==0)
         {
             addFirst(element);
@@ -317,7 +317,7 @@ public:
      */
     const T& get(int index) const
     {
-        if(index<0 || index>=amount)throw IndexOutOfBound();
+        if(index<0 || index>=amount)throw IndexOutOfBound("Link get");
         Node *a=head;
         for(int i=0;i<index;++i)a=a->next;
         return a->value;
@@ -358,7 +358,7 @@ public:
      */
     void removeIndex(int index)
     {
-        if(index<0 || index>=amount)throw IndexOutOfBound();
+        if(index<0 || index>=amount)throw IndexOutOfBound("Link remove");
         Node *a=head;
         for(int i=0;i<index;++i)a=a->next;
         if(a->pred)a->pred->next=a->next;else head=a->next;
@@ -423,7 +423,7 @@ public:
      */
     void set(int index, const T &element)
     {
-        if(index<0 || index>=amount)throw IndexOutOfBound();
+        if(index<0 || index>=amount)throw IndexOutOfBound("Link set");
         Node *a=head;
         for(int i=0;i<index;++i)a=a->next;
         a->value=element;
