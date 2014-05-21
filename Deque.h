@@ -87,7 +87,7 @@ public:
                     t1=t2;
                 }
                 cursor=(cursor+1)%base.capacity;
-                base.last=(base.first+1)%base.capacity;
+                base.first=(base.first+1)%base.capacity;
             }
         }
 
