@@ -142,7 +142,7 @@ public:
             elements=new V[capacity];
             point1=new int[capacity];
             point2=new int[capacity];
-            for(int i=1;i<=amount;++i)elements[i]=x.getIndex(i);
+            for(int i=1;i<=amount;++i)elements[i]=x.elements[i];
             for(int i=1;i<=amount;++i)point1[i]=point2[i]=i;
         }
         return *this;
@@ -158,7 +158,7 @@ public:
             elements=new V[capacity];
             point1=new int[capacity];
             point2=new int[capacity];
-            for(int i=1;i<=amount;++i)elements[i]=x.getIndex(i);
+            for(int i=1;i<=amount;++i)elements[i]=x.elements[i];
             for(int i=1;i<=amount;++i)point1[i]=point2[i]=i;
     }
 
@@ -185,11 +185,6 @@ public:
     Iterator iterator()
     {
         return Iterator(*this);
-    }
-
-    V getIndex(int i) const
-    {
-        return elements[i];
     }
 
     /**
