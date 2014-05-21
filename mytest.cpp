@@ -175,6 +175,6 @@ void testHeap()
 
 int main()
 {
-    //testDeque();
+    testDeque();
     testHeap();
 }
