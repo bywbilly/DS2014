@@ -55,21 +55,21 @@ public:
         {
             if(!valid)throw ElementNotExist();
             valid=0;
-            if(cursor->pred)cursor->pred->next=cursor->next;else base.head=cursor->next;
-            if(cursor->next)cursor->next->pred=cursor->pred;else base.tail=cursor->pred;
+            if(cursor->pred)cursor->pred->next=cursor->next;else base->head=cursor->next;
+            if(cursor->next)cursor->next->pred=cursor->pred;else base->tail=cursor->pred;
             auto *a=cursor;
             cursor=cursor->next;
             delete a;
-            base.amount--;
-            if(!base.amount)base.head=base.tail=0;
+            base->amount--;
+            if(!base->amount)base->head=base->tail=0;
         }
 
         /**
          * TODO constructor
          */
-        Iterator(LinkedList<T> &c):base(c)
+        Iterator(LinkedList<T> *c=0):base(c)
         {
-            cursor=c.head;
+            cursor=c->head;
             valid=0;
         }
 
@@ -83,7 +83,7 @@ public:
          * @param valid iterator is invalid when executes remove()
          */
         struct LinkedList<T>::Node *cursor;
-        LinkedList<T> &base;
+        LinkedList<T> *base;
         bool valid;
     };
 
@@ -119,9 +119,9 @@ public:
         /**
          * TODO constructor
          */
-        ConstIterator(const LinkedList<T> &c):base(c)
+        ConstIterator(const LinkedList<T> *c=0):base(c)
         {
-            cursor=c.head;
+            cursor=c->head;
             valid=0;
         }
     private:
@@ -130,7 +130,7 @@ public:
          * @param valid iterator is invalid when executes remove()
          */
         struct LinkedList<T>::Node *cursor;
-        const LinkedList<T> &base;
+        const LinkedList<T> *base;
         bool valid;
     };
     /**
@@ -442,7 +442,7 @@ public:
      */
     Iterator iterator()
     {
-        return Iterator(*this);
+        return Iterator(this);
     }
 
     /**
@@ -450,7 +450,7 @@ public:
      */
     ConstIterator iterator() const
     {
-        return ConstIterator(*this);
+        return ConstIterator(this);
     }
 private:
     /**

@@ -25,13 +25,13 @@ public:
          */
         bool hasNext()
         {
-            if(base.capacity==0)return 0;
+            if(base->capacity==0)return 0;
             if(!order)
             {
-                return ((cursor+1)%base.capacity!=base.last);
+                return ((cursor+1)%base->capacity!=base->last);
             }else
             {
-                return ((cursor-1+base.capacity)%base.capacity!=base.first);
+                return ((cursor-1+base->capacity)%base->capacity!=base->first);
             }
         }
 
@@ -45,12 +45,12 @@ public:
             valid=1;
             if(!order)
             {
-                cursor=(cursor+1)%base.capacity;
+                cursor=(cursor+1)%base->capacity;
             }else
             {
-                cursor=(cursor-1+base.capacity)%base.capacity;
+                cursor=(cursor-1+base->capacity)%base->capacity;
             }
-            return base.elements[cursor];
+            return base->elements[cursor];
         }
 
         /**
@@ -70,31 +70,31 @@ public:
             {
                 while(1)
                 {
-                    t2=(t1+1)%base.capacity;
-                    if(t2==base.last)break;
-                    base.elements[t1]=base.elements[t2];
+                    t2=(t1+1)%base->capacity;
+                    if(t2==base->last)break;
+                    base->elements[t1]=base->elements[t2];
                     t1=t2;
                 }
-                cursor=(cursor-1+base.capacity)%base.capacity;
-                base.last=(base.last-1+base.capacity)%base.capacity;
+                cursor=(cursor-1+base->capacity)%base->capacity;
+                base->last=(base->last-1+base->capacity)%base->capacity;
             }else
             {
                 while(1)
                 {
-                    t2=(t1-1+base.capacity)%base.capacity;
-                    if(t2==base.first)break;
-                    base.elements[t1]=base.elements[t2];
+                    t2=(t1-1+base->capacity)%base->capacity;
+                    if(t2==base->first)break;
+                    base->elements[t1]=base->elements[t2];
                     t1=t2;
                 }
-                cursor=(cursor+1)%base.capacity;
-                base.first=(base.first+1)%base.capacity;
+                cursor=(cursor+1)%base->capacity;
+                base->first=(base->first+1)%base->capacity;
             }
         }
 
         /**
          * TODO constructor
          */
-        Iterator(Deque<T> &c, int cur,bool _order):base(c),cursor(cur),order(_order)
+        Iterator(Deque<T> *c=0, int cur=0,bool _order=0):base(c),cursor(cur),order(_order)
         {
             valid=0;
         }
@@ -104,7 +104,7 @@ public:
          * @param valid iterator is invalid when executes remove()
          * @param order check whether the iterator is an iterator over the elements in this deque in proper sequence
          */
-        Deque<T> &base;
+        Deque<T> *base;
         int cursor;
         bool order,valid;
     };
@@ -287,7 +287,7 @@ public:
 	  */
     Iterator iterator()
     {
-        return Iterator(*this,first,0);
+        return Iterator(this,first,0);
     }
 
 	 /**
@@ -295,7 +295,7 @@ public:
 	  */
     Iterator descendingIterator()
     {
-        return Iterator(*this,last,1);
+        return Iterator(this,last,1);
     }
 private:
     /**

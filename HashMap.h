@@ -89,10 +89,10 @@ public:
         {
             if( (cursor->next!=0))return 1;
             int start;
-            if(!first && cursor->next==0) start=base.getHashCode(cursor->elem.getKey())+1;else start=0;
-            for(int i=start;i<base.capacity;++i)
+            if(!first && cursor->next==0) start=base->getHashCode(cursor->elem.getKey())+1;else start=0;
+            for(int i=start;i<base->capacity;++i)
             {
-                if(base.elements[i].next)return 1;
+                if(base->elements[i].next)return 1;
             }
             return 0;
         }
@@ -110,13 +110,13 @@ public:
                 return cursor->elem;
             }
             int start;
-            if(!first && cursor->next==0) start=base.getHashCode(cursor->elem.getKey())+1;else start=0;
+            if(!first && cursor->next==0) start=base->getHashCode(cursor->elem.getKey())+1;else start=0;
             if(first)first=!first;
-            for(int i=start;i<base.capacity;++i)
+            for(int i=start;i<base->capacity;++i)
             {
-                if(base.elements[i].next)
+                if(base->elements[i].next)
                 {
-                    cursor=base.elements[i].next;
+                    cursor=base->elements[i].next;
                     return cursor->elem;
                 }
             }
@@ -126,11 +126,11 @@ public:
         /**
          * TODO Constructor
          */
-        Iterator(const HashMap<K,V,H> &c):base(c),cursor(&(c.elements[0])),first(1)
+        Iterator(const HashMap<K,V,H> *c=0):base(c),cursor(&(c->elements[0])),first(1)
         {
         }
     private:
-        const HashMap<K,V,H> &base;
+        const HashMap<K,V,H> *base;
         struct HashMap<K,V,H>::Node *cursor;
         bool first;
     };
@@ -196,7 +196,7 @@ public:
      */
     Iterator iterator() const
     {
-        return Iterator(*this);
+        return Iterator(this);
     }
 
     /**

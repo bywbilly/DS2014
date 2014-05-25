@@ -26,7 +26,7 @@ public:
          */
         bool hasNext()
         {
-            return cursor+1<base.amount;
+            return cursor+1<base->amount;
         }
 
         /**
@@ -37,7 +37,7 @@ public:
         {
             if(!hasNext())throw ElementNotExist();
             valid=1;
-            return base.elements[++cursor];
+            return base->elements[++cursor];
         }
 
         /**
@@ -51,7 +51,7 @@ public:
         void remove()
         {
             if(!valid)throw ElementNotExist();
-            base.removeIndex(cursor);
+            base->removeIndex(cursor);
             valid=0;
             --cursor;
         }
@@ -59,7 +59,7 @@ public:
         /**
          * TODO Constructor
          */
-        Iterator(ArrayList<T> &c):base(c)
+        Iterator(ArrayList<T> *c=0):base(c)
         {
             cursor=-1;
             valid=0;
@@ -69,7 +69,7 @@ public:
          * @param cursor point to the position
          * @param valid iterator is invalid when executes remove()
          */
-        ArrayList<T> &base;
+        ArrayList<T> *base;
         int cursor;
         bool valid;
     };
@@ -232,7 +232,7 @@ public:
      */
     Iterator iterator()
     {
-        return Iterator(*this);
+        return Iterator(this);
     }
 private:
 

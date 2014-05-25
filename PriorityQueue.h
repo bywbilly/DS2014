@@ -64,7 +64,7 @@ public:
             if(!hasNext())throw ElementNotExist();
             valid=1;
             cursor--;
-            return base.elements[base.point2[cursor]];
+            return base->elements[base->point2[cursor]];
         }
 
 		/**
@@ -78,21 +78,21 @@ public:
 		void remove()
 		{
 		    if(!valid)throw ElementNotExist();
-		    int p1=base.point2[cursor],p2=base.amount;
-            base.elements[p1]=base.elements[p2];
-            base.point2[base.point1[p2]]=p1;
-            base.point1[p1]=base.point1[p2];
-            base.amount--;
-            base.down(p1);
+		    int p1=base->point2[cursor],p2=base->amount;
+            base->elements[p1]=base->elements[p2];
+            base->point2[base->point1[p2]]=p1;
+            base->point1[p1]=base->point1[p2];
+            base->amount--;
+            base->down(p1);
             valid=0;
 		}
 
 		/**
          * TODO Constructor
          */
-        Iterator(PriorityQueue<V,C> &c):base(c)
+        Iterator(PriorityQueue<V,C> *c=0):base(c)
         {
-            cursor=base.amount+1;
+            cursor=base->amount+1;
             valid=0;
         }
     private:
@@ -100,7 +100,7 @@ public:
          * @param cursor point to the position
          * @param valid iterator is invalid when executes remove()
          */
-        PriorityQueue<V,C> &base;
+        PriorityQueue<V,C> *base;
         int cursor;
         bool valid;
     };
@@ -184,7 +184,7 @@ public:
      */
     Iterator iterator()
     {
-        return Iterator(*this);
+        return Iterator(this);
     }
 
     /**

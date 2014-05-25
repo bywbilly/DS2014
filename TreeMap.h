@@ -77,7 +77,7 @@ public:
         /**
          * TODO Constructor
          */
-        Iterator(const TreeMap<K,V> *c):base(c),cursor(0)
+        Iterator(const TreeMap<K,V> *c=0):base(c),cursor(0)
         {
         }
     private:
