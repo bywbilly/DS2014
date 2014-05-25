@@ -8,7 +8,7 @@ t1=f1.readlines()
 t2=f2.readlines()
 t=min(len(t1),len(t2))
 for i in range(t):
-    if t1[i]!=t2[i]:
+    if t1[i].strip().split()!=t2[i].strip().split():
         print "diff here"
         print "line %d:"%(i+1)
         print t1[i],t2[i]
