@@ -5,6 +5,7 @@
 #include "ElementNotExist.h"
 #include "iostream"
 #include "ctime"
+#include "cstdlib"
 
 /**
  * TreeMap is the balanced-tree implementation of map. The iterators must
