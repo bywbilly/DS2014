@@ -7,6 +7,7 @@
 #include "ElementNotExist.h"
 #include "IndexOutOfBound.h"
 #include "queue"
+#include "set"
 using namespace std;
 typedef pair<int, int> PII;
 
@@ -173,8 +174,37 @@ void testHeap()
     cout<<y.empty()<<endl;
 }
 
+void testHeap2()
+{
+    multiset<int> s;
+    PriorityQueue<int> p;
+    int temp;
+    for(int i=0;i<=1000;i++)
+    {
+        temp=(int)time(0);
+        s.insert(temp);
+        p.push(temp);
+    }
+    for(auto it=p.iterator();it.hasNext();)
+    {
+        temp=it.next();
+        if(time(0)%4==0)
+        {
+            s.erase(s.find(temp));
+            it.remove();
+        }
+        if(*(s.begin())!=p.front())
+        {
+            puts("WA");
+            return;
+        }
+    }
+    puts("AC");
+}
+
 int main()
 {
     testDeque();
     testHeap();
+    testHeap2();
 }
