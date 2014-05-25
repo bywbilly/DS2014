@@ -174,6 +174,12 @@ void testHeap()
     cout<<y.empty()<<endl;
 }
 
+static int RandNum=31;
+int Rand()
+{
+	return RandNum=(RandNum*11+239)%65537;
+}
+
 void testHeap2()
 {
     multiset<int> s;
@@ -181,14 +187,14 @@ void testHeap2()
     int temp;
     for(int i=0;i<=1000;i++)
     {
-        temp=(int)time(0);
+        temp=Rand();
         s.insert(temp);
         p.push(temp);
     }
     for(auto it=p.iterator();it.hasNext();)
     {
         temp=it.next();
-        if(time(0)%4==0)
+        if(Rand()%4==0)
         {
             s.erase(s.find(temp));
             it.remove();
@@ -199,6 +205,8 @@ void testHeap2()
             return;
         }
     }
+    cout<<s.size()<<endl;
+    cout<<p.size()<<endl;
     puts("AC");
 }
 
