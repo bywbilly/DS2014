@@ -182,18 +182,20 @@ int Rand()
 
 void testHeap2()
 {
-    multiset<int> s;
+    multiset<int> s,s1;
     PriorityQueue<int> p;
     int temp;
     for(int i=0;i<=1000;i++)
     {
         temp=Rand();
         s.insert(temp);
+        s1.insert(temp);
         p.push(temp);
     }
     for(auto it=p.iterator();it.hasNext();)
     {
         temp=it.next();
+        s1.erase(s1.find(temp));
         if(Rand()%4==0)
         {
             s.erase(s.find(temp));
@@ -205,6 +207,7 @@ void testHeap2()
             return;
         }
     }
+    cout<<s1.size()<<endl;
     cout<<s.size()<<endl;
     cout<<p.size()<<endl;
     puts("AC");
