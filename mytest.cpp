@@ -8,8 +8,16 @@
 #include "IndexOutOfBound.h"
 #include "queue"
 #include "set"
+#include "iostream"
+#include "algorithm"
 using namespace std;
 typedef pair<int, int> PII;
+
+static int RandNum=31;
+int Rand()
+{
+	return RandNum=(RandNum*11+239)%65537;
+}
 
 template <class T>
 void printDeque(Deque<T> q)
@@ -80,7 +88,123 @@ void testDeque()
     d2.addLast(202);
     d1=d2;
     printDeque(d1);
-    cout<<"done"<<endl;
+    cout<<"done Deque test1"<<endl;
+}
+
+void testDeque2()
+{
+    puts("Begin Deque test 2");
+    int count,num=0,t1,t2;
+    Deque<int> d;
+    vector<int> v;
+    for(int i=1;i<=100;i++)
+    {
+        d.addFirst(i);
+        d.addLast(-i);
+    }
+    Deque<int> d2(d);
+    auto it1=d.iterator();
+    auto it2=d2.descendingIterator();
+    if(d.size()!=d2.size())
+    {
+        puts("copy WA");
+        return;
+    }
+    count=0;
+    for(;;)
+    {
+        if(it1.hasNext()!=it2.hasNext())
+        {
+            puts("WA iterator or descendingiterator");
+            return;
+        }
+        if(!it1.hasNext())break;
+        t1=it1.next();
+        t2=it2.next();
+        if(t1!=-t2)
+        {
+            puts("WA  add");
+            return;
+        }
+        if(Rand()%2)
+        {
+            count++;
+            continue;
+        }
+        it1.remove();
+        it2.remove();
+        try
+        {
+            it1.remove();
+        }catch(ElementNotExist e)
+        {num++;}
+        try
+        {
+            it2.remove();
+        }catch(ElementNotExist e)
+        {num++;}
+    }
+    if(d.size()!=d2.size() || d.size()!=count)
+    {
+        puts("WA iterator remove");
+        return;
+    }
+    try
+    {
+        it1.next();
+    }catch(ElementNotExist e)
+    {num++;}
+    try
+    {
+        it2.next();
+    }catch(ElementNotExist e)
+    {num++;}
+    d.clear();
+    d2.clear();
+    if(d.size() || d2.size() || !d.isEmpty() || !d2.isEmpty())
+    {
+        puts("WA clear");
+        return;
+    }
+    try{
+        d.getFirst();
+    }catch(ElementNotExist e)
+    {num++;}
+    try{
+        d2.getLast();
+    }catch(ElementNotExist e)
+    {num++;}
+    try{
+        d.removeFirst();
+    }catch(ElementNotExist e)
+    {num++;}
+    try{
+        d2.removeLast();
+    }catch(ElementNotExist e)
+    {num++;}
+    d.addFirst(1);
+    try
+    {
+        d.get(-1);
+    }catch(IndexOutOfBound e)
+    {num++;}
+    try
+    {
+        d.get(d.size());
+    }catch(IndexOutOfBound e)
+    {num++;}
+    try
+    {
+        d.set(-1,-1);
+    }catch(IndexOutOfBound e)
+    {num++;}
+    try
+    {
+        d.set(d.size(),-1);
+    }catch(IndexOutOfBound e)
+    {num++;}
+    cout<<num<<endl;
+    puts("Done Deque test 2");
 }
 
 template <class V, class C>
@@ -148,7 +272,21 @@ void testHeap()
         it.remove();
     }catch (ElementNotExist e)
     {
-        cout<<"OK"<<endl;
+        cout<<"iterator remove OK"<<endl;
+    }
+    try
+    {
+        z.front();
+    }catch (ElementNotExist e)
+    {
+        cout<<"front OK"<<endl;
+    }
+    try
+    {
+        z.pop();
+    }catch (ElementNotExist e)
+    {
+        cout<<"pop OK"<<endl;
     }
     z=t;
     try
@@ -159,7 +297,7 @@ void testHeap()
         it.remove();
     }catch (ElementNotExist e)
     {
-        cout<<"OK"<<endl;
+        cout<<"iterator remove OK"<<endl;
     }
     y=t;
     z=t;
@@ -171,13 +309,15 @@ void testHeap()
         it.next();
         it.remove();
     }
+    try
+    {
+        it.next();
+    }catch (ElementNotExist e)
+    {
+        cout<<"next OK"<<endl;
+    }
     cout<<y.empty()<<endl;
-}
-
-static int RandNum=31;
-int Rand()
-{
-	return RandNum=(RandNum*11+239)%65537;
+    cout<<"Done heap test1"<<endl;
 }
 
 void testHeap2()
@@ -210,12 +350,13 @@ void testHeap2()
     cout<<s1.size()<<endl;
     cout<<s.size()<<endl;
     cout<<p.size()<<endl;
-    puts("AC");
+    puts("Done heap test 2");
 }
 
 int main()
 {
     testDeque();
+    testDeque2();
     testHeap();
     testHeap2();
 }

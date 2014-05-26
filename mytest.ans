@@ -13,21 +13,28 @@ End print
 101	202	
 202	101	
 End print
-done
+done Deque test1
+Begin Deque test 2
+198
+Done Deque test 2
 0	1	1	2	2	3	3	4	4	5	5	6	6	7	7	8	8	9	9	
 1
 1
 20
 1
 1
-OK
-OK
+iterator remove OK
+front OK
+pop OK
+iterator remove OK
 0	1	1	2	2	3	3	4	4	5	5	6	6	7	7	8	8	9	9	10	
 End print
 0	1	1	2	2	3	3	4	4	5	5	6	6	7	7	8	8	9	9	10	
 End print
+next OK
 1
+Done heap test1
 0
-751
-751
-AC
+744
+744
+Done heap test 2
