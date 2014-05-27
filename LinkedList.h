@@ -241,6 +241,7 @@ public:
         {
             head=tail=new Node(elem,0,0);
             amount++;
+            return;
         }
         Node *a=new Node(elem,0,head);
         head->pred=a;

@@ -336,7 +336,7 @@ void testHeap2()
     {
         temp=it.next();
         s1.erase(s1.find(temp));
-        if(Rand()%4==0)
+        if(Rand()%15)
         {
             s.erase(s.find(temp));
             it.remove();
