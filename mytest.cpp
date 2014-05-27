@@ -61,6 +61,8 @@ void testDeque()
         d2.addLast(i);
     for(int i=0;i<=100000;i++)
         d2.addFirst(i);
+    auto dd(d2);
+    d2=dd;
     for(int i=0;i<d2.size();i++)
         if(d2.get(i)!=d2.get(d2.size()-i-1))
         {
@@ -332,6 +334,8 @@ void testHeap2()
         s1.insert(temp);
         p.push(temp);
     }
+    auto pp(p);
+    p=pp;
     for(auto it=p.iterator();it.hasNext();)
     {
         temp=it.next();
