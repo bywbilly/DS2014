@@ -325,7 +325,7 @@ void testHeap2()
     multiset<int> s,s1;
     PriorityQueue<int> p;
     int temp;
-    for(int i=0;i<=1000;i++)
+    for(int i=0;i<=100000;i++)
     {
         temp=Rand();
         s.insert(temp);
@@ -336,7 +336,7 @@ void testHeap2()
     {
         temp=it.next();
         s1.erase(s1.find(temp));
-        if(Rand()%15)
+        if(Rand()%49)
         {
             s.erase(s.find(temp));
             it.remove();
