@@ -367,14 +367,6 @@ private:
         }
         return res;
     }
-
-    void show(Node *v)
-    {
-        if(!v)return;
-        std::cout<<v<<" "<<v->elem.getKey()<<" "<<v->left<<" "<<v->right<<std::endl;
-        show(v->left);
-        show(v->right);
-    }
 };
 
 #endif
