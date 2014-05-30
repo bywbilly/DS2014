@@ -11,7 +11,10 @@ for i in range(t):
     if t1[i].strip().split()!=t2[i].strip().split():
         print "diff here"
         print "line %d:"%(i+1)
-        print t1[i],t2[i]
+        print f1,':'
+        print t1[i]
+        print f2,':'
+        print t2[i]
         exit(0)
 if t<len(t1):
     print "file 2 is larger"

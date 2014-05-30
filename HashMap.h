@@ -58,17 +58,12 @@ public:
             value = v;
         }
 
-        K getKey() const
+        const K &getKey() const
         {
             return key;
         }
 
-        V getValue() const
-        {
-            return value;
-        }
-
-        V &getConstValue()
+        const V &getValue() const
         {
             return value;
         }
@@ -261,7 +256,7 @@ public:
         auto it=elements[i].next;
         while(it)
         {
-            if(it->elem.getKey()==key)return it->elem.getConstValue();
+            if(it->elem.getKey()==key)return it->elem.getValue();
             it=it->next;
         }
         throw ElementNotExist();
@@ -309,6 +304,7 @@ public:
     void remove(const K &key)
     {
         int i=getHashCode(key);
+        if(!elements[i].next)throw ElementNotExist();
         if(elements[i].next->elem.getKey()==key)
         {
             amount--;
@@ -319,14 +315,14 @@ public:
         }else
         {
             auto it=elements[i].next;
-            for(;it->next->elem.getKey()!=key;it=it->next);
+            for(;it->next && it->next->elem.getKey()!=key;it=it->next);
+            if(!it->next)throw ElementNotExist();
             auto a=it->next;
             it->next=it->next->next;
             delete a;
             amount--;
             return;
-        }
-        throw ElementNotExist();
+        }        
     }
 
     /**
