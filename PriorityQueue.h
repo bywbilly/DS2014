@@ -4,6 +4,7 @@
 
 #include "ArrayList.h"
 #include "ElementNotExist.h"
+#include "iostream"
 #include <algorithm>
 
 /**
@@ -79,10 +80,13 @@ public:
 		{
 		    if(!valid)throw ElementNotExist();
 		    int p1=base->point2[cursor],p2=base->amount;
-            base->elements[p1]=base->elements[p2];
-            base->point2[base->point1[p2]]=p1;
-            base->point1[p1]=base->point1[p2];
+            std::swap(base->elements[p1],base->elements[p2]);
+            std::swap(base->point2[base->point1[p1]],base->point2[base->point1[p2]]);
+            std::swap(base->point1[p1],base->point1[p2]);
+            base->point1[base->point2[base->amount]]=cursor;
+            base->point2[cursor]=base->point2[base->amount];
             base->amount--;
+            base->up(p1);
             base->down(p1);
             valid=0;
 		}
@@ -234,7 +238,9 @@ public:
     void pop()
     {
         if(empty())throw ElementNotExist();
-        std::swap(elements[1],elements[amount]);
+        elements[1]=elements[amount];
+        point1[point2[amount]]=point1[amount];
+        point2[point1[amount]]=point2[amount];
         --amount;
         down(1);
     }
@@ -246,6 +252,19 @@ public:
     {
         return amount;
     }
+/*
+    void show(bool yes=0) const
+    {
+        for(int i=1;i<=amount;i++)std::cout<<elements[i]<<" ";
+        std::cout<<std::endl;
+        if(yes)
+        {
+            for(int i=1;i<=amount;i++)std::cout<<point1[i]<<" ";
+            std::cout<<std::endl;
+            for(int i=1;i<=amount;i++)std::cout<<point2[i]<<" ";
+            std::cout<<std::endl;
+        }
+    }*/
 private:
     /**
      * @param capacity the size of the array.
