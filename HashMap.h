@@ -276,22 +276,18 @@ public:
     void put(const K &key, const V &value)
     {
         int i=getHashCode(key);
-        if(elements[i].next==0)
-        {
-            elements[i].next=new Node(Entry(key,value),0);
-        }else
-        {
-            Node *a;
-            for(a=&elements[i];a->next;a=a->next)
-            {
-                if(a->next->elem.getKey()==key)
-                {
-                    a->next->elem.modifyValue(value);
-                    return;
-                }
-            }
-            a->next=new Node(Entry(key,value),0);
-        }
+        auto a=elements[i].next,b=&elements[i];
+     	  while(a)
+     	  {
+     	  	if(a->elem.getKey()==key)
+     	  	{
+     	  		a->elem.modifyValue(value);
+     	  		return;
+     	  	}
+     	  	b=a;
+     	  	a=a->next;
+     	  }
+     	  b->next=new Node(Entry(key,value),0);
         amount++;
         if(amount>capacity)enlarge();
     }
@@ -304,25 +300,20 @@ public:
     void remove(const K &key)
     {
         int i=getHashCode(key);
-        if(!elements[i].next)throw ElementNotExist();
-        if(elements[i].next->elem.getKey()==key)
-        {
-            amount--;
-            auto a=elements[i].next;
-            elements[i].next=elements[i].next->next;
-            delete a;
-            return;
-        }else
-        {
-            auto it=elements[i].next;
-            for(;it->next && it->next->elem.getKey()!=key;it=it->next);
-            if(!it->next)throw ElementNotExist();
-            auto a=it->next;
-            it->next=it->next->next;
-            delete a;
-            amount--;
-            return;
-        }        
+     	  auto a=elements[i].next,b=&elements[i];
+     	  while(a)
+     	  {
+     	  	if(a->elem.getKey()==key)
+     	  	{
+     	  		b->next=a->next;
+     	  		delete a;
+     	  		amount--;
+     	  		return;
+     	  	}
+     	  	b=a;
+     	  	a=a->next;
+     	  }
+     	  throw ElementNotExist();
     }
 
     /**
